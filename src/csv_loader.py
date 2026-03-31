@@ -18,16 +18,16 @@ def read_csv (filename):
         return df
     
 
-# Create the number of columns for SQL to use to create a table
+# Create the column headers for SQL to use to create a table
 def create_table_schema(filename):
     # Use the read_csv function created above
     df = read_csv(filename)
     # If the dataframe is empty return no columns
     if df is None:
         return 0
-    # If not return column number
-    num_cols = len(df.columns)
-    return num_cols
+    # If not return column headers
+    col_names = df.columns.tolist()
+    return col_names
 
 # Check if data type is consistent for all rows
 def validate_entries(filename):

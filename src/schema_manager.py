@@ -8,3 +8,6 @@ def init(db_path: str) -> sqlite3.Connection:
     cur = conn.cursor()
 
     print(f"Database created at: {os.path.abspath(db_path)}")
+
+def create_table(conn: sqlite3.Connection, column_names: list):
+    
