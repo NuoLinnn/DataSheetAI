@@ -33,3 +33,17 @@ def create_table(conn: sqlite3.Connection, table_name: str, column_names):
     
     print(f"Table {table_name} created successfully")
 
+
+def create_insert_into_table_script(table_name: str, row: list[str]):
+    """sql script to insert into table if it exists"""
+    placeholders = ", ".join(["?" for _ in row])
+    sql = f"INSERT INTO {table_name} VALUES (NULL, {placeholders})"
+    return sql
+
+
+def insert_into_table(conn: sqlite3.Connection, table_name: str, row: list[str]):
+    """call sqlite to insert into table"""
+    
+    sql_script = create_insert_into_table_script(table_name, row)
+    with conn:
+        conn.execute(sql_script, row)

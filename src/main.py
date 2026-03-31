@@ -17,6 +17,7 @@ def test():
     # create table in sqlite
     schema_manager.create_table(conn, table_name, col_names)
 
+    schema_manager.insert_into_table(conn, table_name, ["Nuo Lin", "2027", "Computer Engeering" , "China"])
     #close connection
     conn.close()
 
