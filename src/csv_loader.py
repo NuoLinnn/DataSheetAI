@@ -36,9 +36,9 @@ def validate_entries(filename):
     # Go through data by rows and columns to validate that the type is correct
     for i in len(df.rows):
         for j in num_cols:
+            print("The data types match")
         
         # Figure out how to check column data type
 
-    return print("The data types match")
 
 
