@@ -12,12 +12,13 @@ def test():
     conn = schema_manager.init(db_path)
     
     # get table schema from input
-    col_names = csv_loader.create_table_schema(csv_file)
+    col_names, data_rows = csv_loader.read_csv(csv_file)
 
     # create table in sqlite
     schema_manager.create_table(conn, table_name, col_names)
 
-    schema_manager.insert_into_table(conn, table_name, ["Nuo Lin", "2027", "Computer Engeering" , "China"])
+    for row in data_rows:
+        schema_manager.insert_into_table(conn, table_name, row)
     #close connection
     conn.close()
 

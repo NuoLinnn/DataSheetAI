@@ -14,20 +14,30 @@ def read_csv (filename):
     if df.empty:
         print("Data frame is empty.")
         return None
-    else:
-        return df
-    
+
+    # get the table col name and rows
+    col_names = create_table_schema(df)
+    data_rows = read_rows(df)
+
+    return col_names, data_rows
 
 # Create the column headers for SQL to use to create a table
-def create_table_schema(filename):
-    # Use the read_csv function created above
-    df = read_csv(filename)
+def create_table_schema(df):
     # If the dataframe is empty return no columns
     if df is None:
-        return 0
+        return []
     # If not return column headers
     col_names = df.columns.tolist()
     return col_names
+
+
+def read_rows(df) -> list[list[str]]:
+    if df is None:
+        return []
+    
+    # add all rows from file and outputs them in a list
+    return df.values.tolist()
+
 
 # Check if data type is consistent for all rows
 def validate_entries(filename):
