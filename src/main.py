@@ -1,5 +1,6 @@
 import csv_loader
 import schema_manager
+import query_service
 import os
 
 # test inputs
@@ -17,6 +18,9 @@ def test():
     # create table in sqlite
     schema_manager.create_table(conn, table_name, col_names)
 
+    # get cli and run queries
+    # query_service.get_cli_command()
+
     for row in data_rows:
         schema_manager.insert_into_table(conn, table_name, row)
     #close connection
@@ -24,3 +28,4 @@ def test():
 
 if __name__ == "__main__":
     test()
+
