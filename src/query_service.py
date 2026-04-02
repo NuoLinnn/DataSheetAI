@@ -2,7 +2,7 @@ import sqlite3
 import os
 import csv_loader
 import schema_manager
-
+import sql_validator
 
 # Use cin from command line
 def get_cli_command():
@@ -35,13 +35,11 @@ def run_sql_query(query_text, db_path):
         cursor.execute(query_text)
 
         # Check if query is a select
-        if query_text.strip().lower().startswith("select"):
+        if query_type_validate(query_text) == True:
             results = cursor.fetchall()
             print("The query was a success! Results: ")
             for row in results:
                 print(row)
-        else:
-            print("Please enter a select query: ")
 
     # Check for database errors
     except sqlite3.OperationalError as err:

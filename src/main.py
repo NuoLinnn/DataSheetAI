@@ -19,7 +19,7 @@ def test():
     schema_manager.create_table(conn, table_name, col_names)
 
     # get cli and run queries
-    query_service.get_cli_command()
+    # query_service.get_cli_command()
 
     for row in data_rows:
         schema_manager.insert_into_table(conn, table_name, row)
