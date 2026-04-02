@@ -24,4 +24,4 @@ def table_known(query_text, table_name):
 
 
 # Reject queries referencing unknown columns
-def col_known(query_text, cols_name):
+# def col_known(query_text, cols_name):

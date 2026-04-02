@@ -10,7 +10,7 @@ def get_cli_command():
         ask = input("What do you want to do: 'load CSV', 'run SQL query', or 'exit'? ")
         if ask.lower() == "load csv":
             filename = input("What is the filename? ")
-            df = read_csv(filename)
+            df = csv_loader.read_csv(filename)
             print("CSV successfully loaded. ")
             return df
         elif ask.lower() == "run sql query":
@@ -29,19 +29,20 @@ def get_cli_command():
 def run_sql_query(query_text, db_path):
     try:
         # Connect to the schema manager
-        conn = schema_manager.init(db_path)
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
 
         # Then connect to SQL to run and return the result
-        cursor.execute(query_text)
+        cur.execute(query_text)
 
         # Check if query is a select
-        if query_type_validate(query_text) == True:
-            results = cursor.fetchall()
+        if sql_validator.query_type_validate(query_text) == True:
+            results = cur.fetchall()
             print("The query was a success! Results: ")
             for row in results:
                 print(row)
 
-    # Check for database errors
+    # Check for database error
     except sqlite3.OperationalError as err:
         print("SQL error: ", err)
 
