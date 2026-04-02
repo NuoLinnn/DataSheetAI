@@ -13,6 +13,11 @@ def query_type_validate(query_text):
 
 # Reject queries referencing unknown tables
 def table_known(query_text, table_name):
+    words = query_text.lower().split()
+    table_name = words[words.index("from") + 1]
+
+    cursor = conn.cursor()
+
 
 # Reject queries referencing unknown columns
 def col_known(query_text, cols_name):
