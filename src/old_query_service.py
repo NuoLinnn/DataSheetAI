@@ -6,9 +6,16 @@ import sql_validator
 
 # Use cin from command line
 def get_cli_command(col_names):
+    col_names = None
+
     while True:
-        ask = input("What do you want to do: 'run SQL query', 'print column names', or 'exit'? ")
-        if ask.lower() == "run sql query":
+        ask = input("What do you want to do: 'load CSV', 'run SQL query', or 'exit'? ")
+        if ask.lower() == "load csv":
+            filename = input("What is the filename? ")
+            col_names, data_rows = csv_loader.read_csv(filename)
+            print("CSV successfully loaded. ")
+
+        elif ask.lower() == "run sql query":
             query = input("Enter your SQL query: ")
             path = input("Enter your db path: ")
             # Validate the query type
@@ -25,14 +32,11 @@ def get_cli_command(col_names):
             if result == False:
                 continue
             return result
-        elif ask.lower() == "print column names":
-            print(col_names)
-            continue
         elif ask.lower() == "exit":
             print("Exiting... ")
             break
         else:
-            print("That is not a valid statement. Please enter 'run SQL query', 'print column names', or 'exit': ")
+            print("That is not a valid statement. Please enter 'load CSV', 'run SQL query', or 'exit': ")
 
 # Run a SQL Query
 def run_sql_query(query_text, db_path):
@@ -42,9 +46,9 @@ def run_sql_query(query_text, db_path):
         cur = conn.cursor()
 
         # Validate that the table exist
-        table_bool = sql_validator.table_known(query_text, conn)
-        if table_bool == False:
-            return table_bool
+        query_bool = sql_validator.table_known(query_text, conn)
+        if query_bool == False:
+            return query_bool
 
         # Then connect to SQL to run and return the result
         cur.execute(query_text)

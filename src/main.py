@@ -1,6 +1,7 @@
 import csv_loader
 import schema_manager
 import query_service
+import sql_validator
 import os
 
 # test inputs
@@ -18,11 +19,15 @@ def test():
     # create table in sqlite
     schema_manager.create_table(conn, table_name, col_names)
 
-    # get cli and run queries
-    query_service.get_cli_command()
-
+    # insert data
     for row in data_rows:
         schema_manager.insert_into_table(conn, table_name, row)
+
+    conn.commit()
+
+    # get cli and run queries
+    query_service.get_cli_command(col_names)
+    
     #close connection
     conn.close()
 
