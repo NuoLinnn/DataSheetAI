@@ -17,8 +17,14 @@ def query_type_validate(query_text):
 
 # Reject queries referencing unknown tables
 def table_known(query_text, conn):
-    in_query = query_text.lower().split()
-    table_name = in_query[in_query.index("from") + 1]
+    in_query = query_text.split()
+    from_index = next((i for i, t in enumerate(in_query) if t.lower() == "from"), None)
+
+    if from_index is None:
+        print("Invalid query: missing FROM")
+        return None
+
+    table_name = in_query[from_index + 1]
 
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
