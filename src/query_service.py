@@ -3,11 +3,14 @@ import os
 import csv_loader
 import schema_manager
 import sql_validator
+import llm_adaptor
+
+path = "sample_data/datasheet.db"
 
 # Use cin from command line
 def get_cli_command(col_names):
     while True:
-        ask = input("What do you want to do: 'load CSV', 'run SQL query', 'print column names', or 'exit'? ")
+        ask = input("What do you want to do: 'load CSV', 'run SQL query', 'ask Claude', 'print column names', or 'exit'? ")
         if ask.lower() == "load csv":
             filename = input("What is the filename? ")
             col_names, data_rows = csv_loader.read_csv(filename)
@@ -15,7 +18,6 @@ def get_cli_command(col_names):
 
         elif ask.lower() == "run sql query":
             query = input("Enter your SQL query: ")
-            path = input("Enter your db path: ")
             # Validate the query type
             q_type_bool = sql_validator.query_type_validate(query)
             if q_type_bool == False:
@@ -30,6 +32,23 @@ def get_cli_command(col_names):
             if result == False:
                 continue
             return result
+
+        elif ask.lower() == "ask claude":
+            prompt = input("What would you like to know about your data?")
+            print(f"Connecting to Claude and running query...")
+            response = llm_adaptor.get_claude_response(prompt).content[0].text
+            query = llm_adaptor.extract_sql(response)
+
+            q_type_bool = sql_validator.query_type_validate(query)
+            if q_type_bool == False:
+                continue
+            # Validate that the column(s) exist
+            col_bool = sql_validator.col_known(query, col_names)
+            if col_bool == False:
+                continue
+
+            print(f"Running query: {query}")
+            result = run_sql_query(query, path)
 
         elif ask.lower() == "print column names":
             print(col_names)
@@ -80,10 +99,3 @@ def run_sql_query(query_text, db_path):
             conn.close()
 
     return query_bool
-
-        
-
-
-
-
-
