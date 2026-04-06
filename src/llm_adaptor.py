@@ -1,9 +1,8 @@
 import anthropic
 import os
 import schema_manager
+import re
 
-# hardcoded database path 
-# TODO: migrate to query_service runner
 db_path = "sample_data/datasheet.db"
 
 def get_all_table_schemas():
@@ -42,11 +41,10 @@ def get_claude_response(user_query: str):
         ]
     )
 
-    print(claude_prompt)
-    print(response)
     return response
 
-
-
-if __name__ == "__main__":
-    get_claude_response("tell me the number of students in the database")
+def extract_sql(response:str) ->str:
+    match = re.search(r"```sql\n(.*?)```", response, re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    return response
