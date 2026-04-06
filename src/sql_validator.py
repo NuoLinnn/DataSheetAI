@@ -4,6 +4,7 @@
 #   maek sure tables used are correct, and that columns are correct
 import sqlite3
 import os
+import re
 
 # Only allow select queries
 def query_type_validate(query_text):
@@ -24,7 +25,7 @@ def table_known(query_text, conn):
         print("Invalid query: missing FROM")
         return None
 
-    table_name = in_query[from_index + 1]
+    table_name = in_query[from_index + 1].rstrip(";")
 
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
@@ -52,6 +53,10 @@ def col_known(query_text, all_columns):
     selected_cols = [col.strip() for col in selected_cols]
 
     for col in selected_cols:
+        agg_match = re.match(r"\w+\((.+)\)", col)
+        if agg_match:
+            col = agg_match.group(1).strip()
+            
         if col != "*" and col not in all_columns:
             print(f"FAIL: The column {col} is not part of the database.")
             return False

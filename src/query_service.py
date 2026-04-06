@@ -31,7 +31,7 @@ def get_cli_command(col_names):
             result = run_sql_query(query, path)
             if result == False:
                 continue
-            return result
+            print(f"\n {result} \n") 
 
         elif ask.lower() == "ask claude":
             prompt = input("What would you like to know about your data?")
