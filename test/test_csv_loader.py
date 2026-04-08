@@ -1,7 +1,10 @@
 import pytest
 import pandas as pd
 import os
+import sys
+sys.path.append('../src')
 from csv_loader import read_csv, create_table_schema, read_rows
+
 
 # ── Fixtures ──────────────────────────────────────────────────────────────────
 

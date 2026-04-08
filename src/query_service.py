@@ -8,7 +8,7 @@ import llm_adaptor
 path = "sample_data/datasheet.db"
 
 # Use cin from command line
-def get_cli_command(col_names):
+def get_cli_command(col_names=None):
     while True:
         ask = input("What do you want to do: 'load CSV', 'run SQL query', 'ask Claude', 'print column names', or 'exit'? ")
         if ask.lower() == "load csv":
@@ -62,6 +62,7 @@ def get_cli_command(col_names):
 
 # Run a SQL Query
 def run_sql_query(query_text, db_path):
+    query_bool = False
     try:
         # Connect to the schema manager
         conn = sqlite3.connect(db_path)
