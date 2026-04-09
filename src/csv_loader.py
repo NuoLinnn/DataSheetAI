@@ -22,7 +22,7 @@ def read_csv (filename):
     return col_names, data_rows
 
 # Create the column headers for SQL to use to create a table
-def load_tables_cols(df):
+def create_table_schema(df):
     # If the dataframe is empty return no columns
     if df is None:
         return []
@@ -37,7 +37,6 @@ def read_rows(df) -> list[list[str]]:
     
     # add all rows from file and outputs them in a list
     return df.values.tolist()
-
 
 # Connect to SQLite to run basic queries
 def conn_sql(filename):
