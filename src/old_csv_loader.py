@@ -22,7 +22,7 @@ def read_csv (filename):
     return col_names, data_rows
 
 # Create the column headers for SQL to use to create a table
-def load_tables_cols(df):
+def create_table_schema(df):
     # If the dataframe is empty return no columns
     if df is None:
         return []
@@ -39,16 +39,16 @@ def read_rows(df) -> list[list[str]]:
     return df.values.tolist()
 
 
-# Connect to SQLite to run basic queries
-def conn_sql(filename):
-    try:
-        conn = sqlite3.connect(filename)
-        print("Successfully connected to SQLite")
-        return conn 
-    except sqlite3.Error as err:
-        print(f"Error connecting to SQLite: {err}")
-        return None
-
+# Check if data type is consistent for all rows
+def validate_entries(filename):
+    # Use the read_csv function created above
+    df = read_csv(filename)
+    # Go through data by rows and columns to validate that the type is correct
+    for i in len(df.rows):
+        for j in num_cols:
+            print("The data types match")
+        
+        # Figure out how to check column data type
 
 
 
