@@ -15,6 +15,6 @@ The LLM adaptor interfaces with an LLM to create a query that takes a general us
 
 
 ## How to Run Tests
-The unit tests create a sample data file and 
+The unit tests run tests on each module and its individual functions. For the CSV loader unit tests, the file creates a valid and invalid file to test on, then verifies that the functions each return their expected results when they are fed a variety of inputs. This ensures that the CSV loader will both load valid data and reject invalid data. The unit tests on other modules behaved similarly. The schema manager test created sample rows and columns to ensure that the database could connect to SQL, create and insert into tables, and reject bad inputs to the functions. Query service unit tests 
 
 The main.py file also created a streamlined location to test individual functions within modules and allow them to interface with each other.
