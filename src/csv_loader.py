@@ -48,6 +48,18 @@ def conn_sql(filename):
         print(f"Error connecting to SQLite: {err}")
         return None
 
+# Check if data type is consistent for all rows
+def validate_entries(filename):
+    # Use the read_csv function created above
+    df = read_csv(filename)
+    # Go through data by rows and columns to validate that the type is correct
+    for i in len(df.rows):
+        for j in num_cols:
+            print("The data types match")
+        
+        # Figure out how to check column data type
+
+
 
 
 
